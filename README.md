@@ -6,6 +6,7 @@
 You can clone the repository:
 ```
 git clone https://github.com/ixodev/magicmirror.git
+cd magicmirror
 ```
 
 Upgrade the installed dependencies and run (Node.js is required)
