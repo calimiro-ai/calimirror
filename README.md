@@ -2,6 +2,8 @@
 ## A powerful embed tool to film track your workout sessions with AI.
 Made by Younes Bendimerad, Lennard Gross and Philip Synowiec
 
+<img src=".github/thumbnail.png"/>
+
 ### Installing and running
 
 You can clone the repository:
