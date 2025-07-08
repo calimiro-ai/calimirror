@@ -5,7 +5,7 @@
 
 You can clone the repository:
 ```
-git clone https://github.com/ixodev/magicmirror/edit/master/README.md
+git clone https://github.com/ixodev/magicmirror.git
 ```
 
 Upgrade the installed dependencies and run (Node.js is required)
