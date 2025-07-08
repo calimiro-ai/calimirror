@@ -1,0 +1,25 @@
+.big-button {
+  padding: 15px;
+  margin: 10px;
+  font-size: 1.2em;
+  background: grey;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.big-button:hover {
+  background: white;
+  color: grey;
+}
+
+.white-border {
+  border: 2px solid grey;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+}
