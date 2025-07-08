@@ -8,7 +8,7 @@ You can clone the repository:
 git clone https://github.com/ixodev/magicmirror/edit/master/README.md
 ```
 
-Upgrade the installed dependencies and run
+Upgrade the installed dependencies and run (Node.js is required)
 ```
 npm install
 npm run server
