@@ -1,9 +1,3 @@
-<style>
-  a {
-    text-decoration: none;
-  }
-</style>
-
 # Calisthenics SmartMirror
 ## A powerful embed tool to film track your workout sessions with AI.
 
@@ -25,4 +19,4 @@ The config/config.js file sets up the port as 8080 but you can set it as you lik
 ### Dependencies used for this project
 
 This is the frontend part. We used the power of MagicMirror², an open-source smart mirror platform. If you're looking for the models that were trained for this project and the AI, you can find it at
-<a href="https://www.github.com/ixodev/smartmirror">this place</a>. We used MediaPipe from Google to track workout exercises.
+<a style="text-decoration: none" href="https://www.github.com/ixodev/smartmirror">this place</a>. We used MediaPipe from Google to track workout exercises.
