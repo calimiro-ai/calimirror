@@ -7,8 +7,8 @@ CalisthenicsSmartMirror v0.1.0 (frontend)
 
 Module.register("MMM-WorkoutTracker", {
 	defaults: {
-		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Calories: ", "Cardio: "],
-		statsDisplayUnits: ["", "reps", "kcal", "bpm"],
+		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],
+		statsDisplayUnits: ["", "reps", "s"],
 		appTitle: "WorkoutTracker",
 		divWhiteBorderClass: "white-border"
 	},
@@ -135,10 +135,9 @@ Module.register("MMM-WorkoutTracker", {
 			if(!this.paused) {
 				this.stats = [];
 
-				this.stats.push(payload.currentExercise);
-				this.stats.push(payload.numOfReps);
-				this.stats.push(payload.caloriesBurnt);
-				this.stats.push(payload.cardioRythm);
+				this.stats.push(payload.current_exercise);
+				this.stats.push(payload.total_reps);
+				this.stats.push(payload.timestamp);
 
 				this.updateDom();
 			} else {
