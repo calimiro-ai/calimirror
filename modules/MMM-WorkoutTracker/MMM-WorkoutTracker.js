@@ -5,6 +5,7 @@ CalisthenicsSmartMirror v0.1.0 (frontend)
 
 */
 
+
 Module.register("MMM-WorkoutTracker", {
 	defaults: {
 		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],
@@ -14,7 +15,7 @@ Module.register("MMM-WorkoutTracker", {
 	},
 
 	paused: false,
-
+	stopped: false,
 
 	stats: null,
 
@@ -92,6 +93,7 @@ Module.register("MMM-WorkoutTracker", {
 		quitButton.className = "big-button";
 		quitButton.innerHTML = "Exit Workout Session 🛑";
 		quitButton.onclick = () => {
+			this.stopped = true;
 			this.stopWorkoutTracking();
 			this.hide(1000);
 			setTimeout(() => {
@@ -125,6 +127,8 @@ Module.register("MMM-WorkoutTracker", {
 			if(sender.name === "MMM-WorkoutStarter" && notification === "WORKOUT_TRACKING_START") {
 				this.show(1000);
 				this.startWorkoutTracking();
+				this.paused = false;
+				this.stopped = false;
 			}
 		}
 	},
@@ -145,6 +149,10 @@ Module.register("MMM-WorkoutTracker", {
 			}
 
 
+		}
+
+		else if(notification == "WORKOUT_SESSION_RUNNING") {
+			this.sendSocketNotification("WORKOUT_SESSION_RUNNING", {paused: this.paused, stopped: this.stopped});
 		}
 
 	},
