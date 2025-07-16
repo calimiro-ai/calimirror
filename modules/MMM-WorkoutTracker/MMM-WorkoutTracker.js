@@ -6,6 +6,7 @@ CalisthenicsSmartMirror v0.1.0 (frontend)
 */
 
 
+
 Module.register("MMM-WorkoutTracker", {
 	defaults: {
 		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],

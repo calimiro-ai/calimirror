@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 
 module.exports = NodeHelper.create({
 
-
     paused: false,
     stopped: false,
 
@@ -25,4 +24,5 @@ module.exports = NodeHelper.create({
             this.stopped = payload.stopped;
         }
     }
+
 });
