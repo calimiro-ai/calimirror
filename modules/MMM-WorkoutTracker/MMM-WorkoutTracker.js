@@ -96,9 +96,9 @@ Module.register("MMM-WorkoutTracker", {
 		quitButton.onclick = () => {
 			this.stopped = true;
 			this.stopWorkoutTracking();
-			this.hide(1000);
+			MM.getModules().withClass("tracking_modules").enumerate(module => module.hide(1000));
 			setTimeout(() => {
-					this.sendNotification("WORKOUT_TRACKING_END", {});
+				this.sendNotification("WORKOUT_TRACKING_END", {});
 			}, 1000);
 		};
 		buttonsContainer.appendChild(quitButton);
@@ -126,7 +126,7 @@ Module.register("MMM-WorkoutTracker", {
 	notificationReceived(notification, payload, sender) {
 		if(sender) {
 			if(sender.name === "MMM-WorkoutStarter" && notification === "WORKOUT_TRACKING_START") {
-				this.show(1000);
+				MM.getModules().withClass("tracking_modules").enumerate(module => module.show(1000));
 				this.startWorkoutTracking();
 				this.paused = false;
 				this.stopped = false;

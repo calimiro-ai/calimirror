@@ -43,12 +43,20 @@ let config = {
 			position: "top_left",
 			classes: "tracking_modules",
 			hiddenOnStartup: true,
-			config: {
-				dataReceiveEndpoint: "/workout-tracking"
-			}
 		},
+
+		// Instance of the clock module which will be shown while the workout session is running
+		{
+			module: "clock",
+			hiddenOnStartup: true,
+			position: "top_right",
+			classes: "tracking_modules",
+			showDate: false
+		},
+
 		{
 			module: "alert",
+			hiddenOnStartup: true, // Make sure no alert will pop up randomly at the beginning
 		},
 		{
 			module: "updatenotification",
@@ -115,8 +123,7 @@ let config = {
 		},
 		{
 			module: "MMM-WorkoutStarter",
-			position: "top_center",
-			classes: "tracking_modules",
+			position: "top_center"
 		}
 	]
 };
