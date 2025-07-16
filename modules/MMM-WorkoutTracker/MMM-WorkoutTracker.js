@@ -146,6 +146,7 @@ Module.register("MMM-WorkoutTracker", {
 
 				this.updateDom();
 			} else {
+				this.sendNotification("HIDE_ALERT", {}); // Hide previous alert or notification
 				this.sendNotification("SHOW_ALERT", {type: "notification", effect: "exploader", title: "Workout Tracker", message: "Workout Session is paused!", timer: 3000});
 			}
 
