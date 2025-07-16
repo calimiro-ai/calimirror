@@ -20,7 +20,7 @@ npm run server
 ```
 
 The config/config.js file sets up the port as 8080 but you can set it as you like it.
-Please go to the <a href="https://docs.magicmirror.builders/configuration/introduction.html"> MagicMirror² documentation for details</a>.
+Please go to the <a href="https://docs.magicmirror.builders/configuration/introduction.html"> MagicMirror² documentation</a> for details.
 
 ### Frameworks used for this project
 
