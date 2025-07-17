@@ -86,6 +86,7 @@ Module.register("MMM-WorkoutTracker", {
 			this.pauseWorkoutTracking();
 			pauseButton.innerHTML = this.paused ? "Resume Workout Session ▶️" : "Pause Workout Session ⏸️";
 		};
+
 		buttonsContainer.appendChild(pauseButton);
 
 		buttonsContainer.appendChild(document.createElement("br"));
@@ -94,12 +95,9 @@ Module.register("MMM-WorkoutTracker", {
 		quitButton.className = "big-button";
 		quitButton.innerHTML = "Exit Workout Session 🛑";
 		quitButton.onclick = () => {
-			this.stopped = true;
+
 			this.stopWorkoutTracking();
-			MM.getModules().withClass("tracking_modules").enumerate(module => module.hide(1000));
-			setTimeout(() => {
-				this.sendNotification("WORKOUT_TRACKING_END", {});
-			}, 1000);
+
 		};
 		buttonsContainer.appendChild(quitButton);
 
@@ -149,12 +147,6 @@ Module.register("MMM-WorkoutTracker", {
 				this.sendNotification("HIDE_ALERT", {}); // Hide previous alert or notification
 				this.sendNotification("SHOW_ALERT", {type: "notification", effect: "exploader", title: "Workout Tracker", message: "Workout Session is paused!", timer: 3000});
 			}
-
-
-		}
-
-		else if(notification == "WORKOUT_SESSION_RUNNING") {
-			this.sendSocketNotification("WORKOUT_SESSION_RUNNING", {paused: this.paused, stopped: this.stopped});
 		}
 
 	},
@@ -164,11 +156,22 @@ Module.register("MMM-WorkoutTracker", {
 	},
 	
 	stopWorkoutTracking() {
-
+		this.stopped = true;
+		this.sendToBackend();
+		
+		MM.getModules().withClass("tracking_modules").enumerate(module => module.hide(1000));
+		setTimeout(() => {
+			this.sendNotification("WORKOUT_TRACKING_END", {});
+		}, 1000);
 	},
 	
 	pauseWorkoutTracking() {
 		this.paused = !this.paused;
+		this.sendToBackend();
+	},
+
+	sendToBackend() {
+		this.sendSocketNotification("SEND_TO_BACKEND", {paused: this.paused, stopped: this.stopped});
 	}
 
 });
