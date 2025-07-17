@@ -31,10 +31,6 @@ module.exports = NodeHelper.create({
             .then(status => {
                 console.log("Status code: %d", status);
             })
-            .then(res => res.text)
-            .then(text => {
-                console.log("Response from backend: ", text);
-            })
             .catch(err => {
                 console.error("Error: ", err);
             });
