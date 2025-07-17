@@ -144,6 +144,7 @@ Module.register("MMM-WorkoutTracker", {
 
 				this.updateDom();
 			} else {
+				this.sendToBackend();
 				this.sendNotification("HIDE_ALERT", {}); // Hide previous alert or notification
 				this.sendNotification("SHOW_ALERT", {type: "notification", effect: "exploader", title: "Workout Tracker", message: "Workout Session is paused!", timer: 3000});
 			}
@@ -158,7 +159,7 @@ Module.register("MMM-WorkoutTracker", {
 	stopWorkoutTracking() {
 		this.stopped = true;
 		this.sendToBackend();
-		
+
 		MM.getModules().withClass("tracking_modules").enumerate(module => module.hide(1000));
 		setTimeout(() => {
 			this.sendNotification("WORKOUT_TRACKING_END", {});

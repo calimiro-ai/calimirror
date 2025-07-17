@@ -13,8 +13,7 @@ module.exports = NodeHelper.create({
         this.expressApp.use(bodyParser.json());
 
         this.expressApp.post(this.route, (req, res) => {
-            this.sendSocketNotification("WORKOUT_SESSION_RUNNING");
-            res.status(200).json({status: "OK", paused: this.paused, stopped: this.stopped});
+            res.status(200).json({res: "OK"});
             this.sendSocketNotification("WORKOUT_TRACKING_DATA", req.body);
         });
 
