@@ -7,6 +7,7 @@ module.exports = NodeHelper.create({
     paused: false,
     stopped: false,
     route: "/workout-tracking",
+    exercisesRoute: "/available-exercises",
 
     start () {
 
@@ -21,7 +22,9 @@ module.exports = NodeHelper.create({
 
     socketNotificationReceived(notification, payload) {
         if(notification == "SEND_TO_BACKEND") {
-            fetch("http://localhost:8000" + this.route, {
+            const url = "http://localhost:8000" + this.route;
+
+            fetch(url, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"}, // Content-length by default calculated
                     body: JSON.stringify(payload)
@@ -29,11 +32,29 @@ module.exports = NodeHelper.create({
             )
             .then(res => res.status)
             .then(status => {
-                console.log("Status code: %d", status);
+                console.log(`Status code of POST request to ${url}   :   %d`, res.status);
             })
             .catch(err => {
-                console.error("Error: ", err);
+                console.error(`POST request to ${url} failed:\n`, err);
             });
+        }
+
+        else if (notification == "WORKOUT_TRACKING_START") {
+            const url = "http://localhost:8000" + this.exercisesRoute;
+
+            fetch(url)
+            .then(res => {
+                console.log(`Status code of GET request to ${url}   :   %d`, res.status);
+                return res;
+            })
+            .then(res => res.json())
+            .then(data => {
+                this.sendSocketNotification("WORKOUT_TRACKING_START", data);
+            })
+            .catch(err => {
+                console.error(`GET request to ${url} failed:\n`, err);
+            });
+
         }
     }
 

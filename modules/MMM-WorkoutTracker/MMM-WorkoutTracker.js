@@ -18,9 +18,11 @@ Module.register("MMM-WorkoutTracker", {
 	paused: false,
 	stopped: false,
 
-	stats: null,
+	mainContainer: null,
 
-	containers: {},
+	stats: null,
+	availableExercises: null,
+	areExercisesAvailable: false,
 
 
 	getStyles () {
@@ -35,7 +37,7 @@ Module.register("MMM-WorkoutTracker", {
 		container.classList.add(this.defaults.divWhiteBorderClass);
 	},
 
-	createStatsDisplays(container) {
+	createStatsDisplays() {
 		var statsDisplaysContainer = document.createElement("div");
 		this.addWhiteBorderClassToContainer(statsDisplaysContainer);
 
@@ -58,11 +60,10 @@ Module.register("MMM-WorkoutTracker", {
 			}
 		}
 
-		container.appendChild(statsDisplaysContainer);
-		return statsDisplaysContainer;
+		this.mainContainer.appendChild(statsDisplaysContainer);
 	},
 
-	createHeadlineBanner(container) {
+	createHeadlineBanner() {
 		var headlineBanner = document.createElement("div");
 		this.addWhiteBorderClassToContainer(headlineBanner);
 
@@ -70,12 +71,10 @@ Module.register("MMM-WorkoutTracker", {
 		title.innerHTML = this.defaults.appTitle;
 		headlineBanner.appendChild(title);
 
-		container.appendChild(headlineBanner);
-
-		return headlineBanner;
+		this.mainContainer.appendChild(headlineBanner);
 	},
 
-	createButtons(container) {
+	createButtons() {
 		var buttonsContainer = document.createElement("div");
 		this.addWhiteBorderClassToContainer(buttonsContainer);
 
@@ -101,24 +100,52 @@ Module.register("MMM-WorkoutTracker", {
 		};
 		buttonsContainer.appendChild(quitButton);
 
-		container.appendChild(buttonsContainer);
+		this.mainContainer.appendChild(buttonsContainer);
+	},
 
-		return buttonsContainer;
+	createExerciseSelector() {
+		var exerciseSelectorContainer = document.createElement("div");
+		this.addWhiteBorderClassToContainer(exerciseSelectorContainer);
+
+		var selector = document.createElement("select");
+		selector.id = "exercise-selector";
+
+		if(this.availableExercises === null) {
+			console.error("Error: this.availableExercises = null");
+			return;
+		}
+
+		this.availableExercises.forEach(option => {
+			var optionElement = document.createElement("option");
+			optionElement.value = option;
+			optionElement.innerHTML = option;
+			selector.appendChild(optionElement);
+		});
+
+		selector.addEventListener("change", (event) => {
+			var selectedValue = event.target.value;
+			console.log("Selected option: ", selectedValue);
+		});
+		
+		exerciseSelectorContainer.appendChild(selector);
+
+		this.mainContainer.appendChild(exerciseSelectorContainer);
 	},
 
 	getDom () {
-		this.containers = {};
 
-		const mainContainer = document.createElement("div");
-		mainContainer.className = "workout-tracker-wrapper";
+		this.mainContainer = document.createElement("div");
+		this.mainContainer.className = "workout-tracker-wrapper";
 		
-		this.containers = {
-			headlineBanner: this.createHeadlineBanner(mainContainer),
-			stats: this.createStatsDisplays(mainContainer),
-			buttons: this.createButtons(mainContainer)
-		};
+		this.createHeadlineBanner();
+		this.createStatsDisplays();
+		this.createButtons();
 
-		return mainContainer;
+		if(this.areExercisesAvailable) {
+			this.createExerciseSelector();
+		}
+
+		return this.mainContainer;
 	},
 
 	notificationReceived(notification, payload, sender) {
@@ -149,11 +176,17 @@ Module.register("MMM-WorkoutTracker", {
 				this.sendNotification("SHOW_ALERT", {type: "notification", effect: "exploader", title: "Workout Tracker", message: "Workout Session is paused!", timer: 3000});
 			}
 		}
+		else if(notification == "WORKOUT_TRACKING_START") {
+			//Add the exercise selector
+			this.availableExercises = payload.available_exercises;
+			this.areExercisesAvailable = true;
+			this.updateDom();
+		}
 
 	},
 
 	startWorkoutTracking() {
-		// Test purpose
+		this.sendSocketNotification("WORKOUT_TRACKING_START", {});
 	},
 	
 	stopWorkoutTracking() {
