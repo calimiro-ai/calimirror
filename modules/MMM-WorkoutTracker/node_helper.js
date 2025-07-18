@@ -32,7 +32,7 @@ module.exports = NodeHelper.create({
             )
             .then(res => res.status)
             .then(status => {
-                console.log(`Status code of POST request to ${url}   :   %d`, res.status);
+                console.log(`Status code of POST request to ${url}   :   %d`, status);
             })
             .catch(err => {
                 console.error(`POST request to ${url} failed:\n`, err);
