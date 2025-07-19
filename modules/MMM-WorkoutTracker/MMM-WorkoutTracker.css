@@ -15,6 +15,25 @@
   color: grey;
 }
 
+select {
+  padding: 15px;
+  margin: 10px;
+  font-size: 1.2em;
+  background: grey; /* Fond gris clair */
+  color: black; /* Texte gris foncé */
+  border: none; /* Bordure fine grise */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+select:hover {
+  background: white;
+  color: grey;
+}
+
 .white-border {
   border: 2px solid grey;
   margin-top: 10px;

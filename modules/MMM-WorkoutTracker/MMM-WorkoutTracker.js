@@ -108,7 +108,6 @@ Module.register("MMM-WorkoutTracker", {
 		this.addWhiteBorderClassToContainer(exerciseSelectorContainer);
 
 		var selector = document.createElement("select");
-		selector.id = "exercise-selector";
 
 		if(this.availableExercises === null) {
 			console.error("Error: this.availableExercises = null");
