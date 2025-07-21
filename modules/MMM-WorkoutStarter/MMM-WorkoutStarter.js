@@ -3,6 +3,10 @@
 
 Module.register("MMM-WorkoutStarter", {
 
+    defaults: {
+        appTitle: "Calimiro AI"
+    },
+
     getStyles: function() {
         return [this.file("MMM-WorkoutStarter.css")];
     },
@@ -12,7 +16,7 @@ Module.register("MMM-WorkoutStarter", {
         const mainContainer = document.createElement("div");
 
         var titleText = document.createElement("h1");
-        titleText.innerHTML = "CalisthenicsSmartMirror";
+        titleText.innerHTML = this.defaults.appTitle;
         mainContainer.appendChild(titleText);
 
         // Start Workout Button

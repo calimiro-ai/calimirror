@@ -1,4 +1,4 @@
-# Calisthenics SmartMirror
+# Calimiro AI
 ## A powerful embed tool to film track your workout sessions with AI.
 Made by Younes Bendimerad, Lennard Gross and Philip Synowiec
 

@@ -1,6 +1,6 @@
 Module.register("MMM-WorkoutLoadingScreen", {
     defaults: {
-        defaultLoadingText: "Loading AI models",
+        defaultLoadingText: "Preparing Calimiro",
         effectChar: ".",
         maxDots: 3,
         updateInterval: 1000

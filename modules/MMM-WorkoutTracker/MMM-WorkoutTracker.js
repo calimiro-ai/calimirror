@@ -11,7 +11,7 @@ Module.register("MMM-WorkoutTracker", {
 	defaults: {
 		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],
 		statsDisplayUnits: ["", "reps", "s"],
-		appTitle: "Workout Tracker",
+		appTitle: "Calimiro AI",
 		divWhiteBorderClass: "white-border"
 	},
 
