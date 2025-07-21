@@ -107,6 +107,10 @@ Module.register("MMM-WorkoutTracker", {
 		var exerciseSelectorContainer = document.createElement("div");
 		this.addWhiteBorderClassToContainer(exerciseSelectorContainer);
 
+		var selectorTipText = document.createElement("p");
+		selectorTipText.innerHTML = "Select manually an exercise";
+		exerciseSelectorContainer.appendChild(selectorTipText);
+
 		var selector = document.createElement("select");
 
 		if(this.availableExercises === null) {
@@ -138,11 +142,12 @@ Module.register("MMM-WorkoutTracker", {
 		
 		this.createHeadlineBanner();
 		this.createStatsDisplays();
-		this.createButtons();
 
 		if(this.areExercisesAvailable) {
 			this.createExerciseSelector();
 		}
+
+		this.createButtons();
 
 		return this.mainContainer;
 	},
@@ -150,16 +155,20 @@ Module.register("MMM-WorkoutTracker", {
 	notificationReceived(notification, payload, sender) {
 		if(sender) {
 			if(sender.name === "MMM-WorkoutStarter" && notification === "WORKOUT_TRACKING_START") {
-				MM.getModules().withClass("tracking_modules").enumerate(module => module.show(1000));
 				this.startWorkoutTracking();
 				this.paused = false;
 				this.stopped = false;
 			}
+
+			if(notification === "WORKOUT_LOADING_START") {
+				this.sendSocketNotification("WORKOUT_LOADING_START", {})
+			}
+
 		}
 	},
 
 	socketNotificationReceived(notification, payload) {
-		if(notification == "WORKOUT_TRACKING_DATA") {
+		if(notification === "WORKOUT_TRACKING_DATA") {
 			
 			if(!this.paused) {
 				this.stats = [];
@@ -175,7 +184,7 @@ Module.register("MMM-WorkoutTracker", {
 				this.sendNotification("SHOW_ALERT", {type: "notification", effect: "exploader", title: "Workout Tracker", message: "Workout Session is paused!", timer: 3000});
 			}
 		}
-		else if(notification == "WORKOUT_TRACKING_START") {
+		else if(notification === "WORKOUT_TRACKING_START") {
 			//Add the exercise selector
 			this.availableExercises = payload.available_exercises;
 			this.areExercisesAvailable = true;
@@ -204,7 +213,7 @@ Module.register("MMM-WorkoutTracker", {
 	},
 
 	sendToBackend() {
-		this.sendSocketNotification("SEND_TO_BACKEND", {paused: this.paused, stopped: this.stopped});
+		this.sendSocketNotification("WORKOUT_SESSION_STATE", {paused: this.paused, stopped: this.stopped});
 	}
 
 });

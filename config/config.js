@@ -50,7 +50,7 @@ let config = {
 			module: "clock",
 			hiddenOnStartup: true,
 			position: "top_right",
-			classes: "tracking_modules",
+			classes: "tracking_modules loading_modules",
 			showDate: false
 		},
 
@@ -58,6 +58,14 @@ let config = {
 			module: "alert",
 			hiddenOnStartup: true, // Make sure no alert will pop up randomly at the beginning
 		},
+
+		{
+			module: "MMM-WorkoutLoadingScreen",
+			position: "middle_center",
+			classes: "loading_modules",
+			hiddenOnStartup: true
+		},
+
 		{
 			module: "updatenotification",
 			position: "top_bar"

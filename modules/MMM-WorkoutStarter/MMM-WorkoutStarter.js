@@ -24,7 +24,8 @@ Module.register("MMM-WorkoutStarter", {
             MM.getModules().enumerate(module => module.hide(1000));
             
             setTimeout(() => {
-                this.sendNotification("WORKOUT_TRACKING_START", {});
+                this.sendNotification("WORKOUT_LOADING_START", {});
+                MM.getModules().withClass("loading_modules").enumerate(module => module.show(1000));
             }, 1000);
 
         };
@@ -38,8 +39,17 @@ Module.register("MMM-WorkoutStarter", {
         if(sender) {
             if(sender.name === "MMM-WorkoutTracker" && notification === "WORKOUT_TRACKING_END") {
                 this.show(1000);
-                MM.getModules().exceptWithClass("tracking_modules").enumerate(module => module.show());
+                MM.getModules().exceptWithClass("tracking_modules loading_modules").enumerate(module => module.show());
                 this.sendNotification("HIDE_ALERT"); // We don't want any alert to pop up
+            }
+
+            if(sender.name === "MMM-WorkoutLoadingScreen" && notification === "WORKOUT_LOADING_EXERCISES_FINISHED") {
+                MM.getModules().withClass("loading_modules").enumerate(module => module.hide(1000));
+                
+                setTimeout(() => {
+                    this.sendNotification("WORKOUT_TRACKING_START", {});
+                    MM.getModules().withClass("tracking_modules").enumerate(module => module.show(1000));
+                }, 1000);
             }
         }
     }
