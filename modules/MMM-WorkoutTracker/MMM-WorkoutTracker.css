@@ -34,7 +34,7 @@ select:hover {
   color: grey;
 }
 
-p {
+p, h1, h2, h3 {
   margin: 5px;
 }
 
@@ -44,5 +44,7 @@ p {
   margin-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 10px;
 }

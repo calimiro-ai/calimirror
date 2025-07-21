@@ -11,7 +11,7 @@ Module.register("MMM-WorkoutTracker", {
 	defaults: {
 		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],
 		statsDisplayUnits: ["", "reps", "s"],
-		appTitle: "WorkoutTracker",
+		appTitle: "Workout Tracker",
 		divWhiteBorderClass: "white-border"
 	},
 
@@ -44,7 +44,7 @@ Module.register("MMM-WorkoutTracker", {
 		var statsDisplays = [];
 
 		for(x = 0; x < this.defaults.statsDisplayTexts.length; ++x) {
-			const element = document.createElement("p");
+			const element = document.createElement("h3");
 			element.innerHTML = this.defaults.statsDisplayTexts[x];
 			statsDisplaysContainer.appendChild(element);
 			statsDisplays.push(element);
@@ -112,6 +112,7 @@ Module.register("MMM-WorkoutTracker", {
 		exerciseSelectorContainer.appendChild(selectorTipText);
 
 		var selector = document.createElement("select");
+		selector.id = "exercise-selector";
 
 		if(this.availableExercises === null) {
 			console.error("Error: this.availableExercises = null");
@@ -129,6 +130,15 @@ Module.register("MMM-WorkoutTracker", {
 			var selectedValue = event.target.value;
 			console.log("Selected option: ", selectedValue);
 		});
+
+		// sets the selector to the current exercise
+		// stats[0] is current exercise
+		if(this.stats !== null) {
+			if(this.stats.length !== 0) {
+				selector.value = this.stats[0];
+			}
+		}
+		
 		
 		exerciseSelectorContainer.appendChild(selector);
 
