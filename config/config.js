@@ -57,6 +57,7 @@ let config = {
 		{
 			module: "alert",
 			hiddenOnStartup: true, // Make sure no alert will pop up randomly at the beginning
+			classes: "by_default_hidden"
 		},
 
 		{

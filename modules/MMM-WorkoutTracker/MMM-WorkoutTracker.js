@@ -9,8 +9,8 @@ CalisthenicsSmartMirror v0.1.0 (frontend)
 
 Module.register("MMM-WorkoutTracker", {
 	defaults: {
-		statsDisplayTexts: ["Current exercise: ", "Num of reps: ", "Timestamp: "],
-		statsDisplayUnits: ["", "reps", "s"],
+		statsDisplayTexts: ["Current exercise: ", "Num of reps: "],
+		statsDisplayUnits: ["", "reps"],
 		appTitle: "Calimiro AI",
 		divWhiteBorderClass: "white-border"
 	},
@@ -22,6 +22,8 @@ Module.register("MMM-WorkoutTracker", {
 
 	stats: null,
 	availableExercises: null,
+	exerciseDurations: [],
+	performedExercises: [],
 	areExercisesAvailable: false,
 
 
@@ -185,7 +187,12 @@ Module.register("MMM-WorkoutTracker", {
 
 				this.stats.push(payload.current_exercise);
 				this.stats.push(payload.total_reps);
-				this.stats.push(payload.timestamp);
+
+				this.performedExercises.push(payload.last_exercise);
+				this.exerciseDurations.push(payload.last_exercise_duration);
+				
+				console.log(this.performedExercises);
+				console.log(this.exerciseDurations);
 
 				this.updateDom();
 			} else {
@@ -199,6 +206,17 @@ Module.register("MMM-WorkoutTracker", {
 			this.availableExercises = payload.available_exercises;
 			this.areExercisesAvailable = true;
 			this.updateDom();
+		}
+		else if(notification === "SHOW_ERROR_LOADING_SESSION_FAILED") {
+			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Calimiro couldn't start the workout session. Please retry.", effect: "exploader", timer: 3000});
+			
+			MM.getModules().withClass("loading_modules").enumerate(module => module.hide(1000));
+			this.hide(1000);
+
+			setTimeout(() => {
+				this.sendNotification("WORKOUT_TRACKING_END", {});
+			}, 1000);
+			
 		}
 
 	},

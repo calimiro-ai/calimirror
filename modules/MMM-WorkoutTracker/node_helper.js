@@ -60,6 +60,7 @@ module.exports = NodeHelper.create({
             })
             .catch(err => {
                 console.error(`GET request to ${url} failed:\n`, err);
+                this.sendSocketNotification("SHOW_ERROR_LOADING_SESSION_FAILED", {});
             });
 
         }
