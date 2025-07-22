@@ -21,7 +21,7 @@ Module.register("MMM-WorkoutStarter", {
 
         // Start Workout Button
         var startButton = document.createElement("button");
-        startButton.innerHTML = "Start new Workout Session 💪";
+        startButton.innerHTML = "Start new Workout Session";
         startButton.className = "workout-start-btn";
         startButton.onclick = () => {
             // Send notification to MMM-WorkoutTracker and dismiss other displayed modules, don't need any payload
@@ -53,6 +53,7 @@ Module.register("MMM-WorkoutStarter", {
                 setTimeout(() => {
                     this.sendNotification("WORKOUT_TRACKING_START", {});
                     MM.getModules().withClass("tracking_modules").enumerate(module => module.show(1000));
+                    this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Perform your exercises in front of the camera!", timer: 3000});
                 }, 1000);
             }
         }

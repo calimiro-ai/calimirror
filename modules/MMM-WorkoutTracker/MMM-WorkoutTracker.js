@@ -80,10 +80,10 @@ Module.register("MMM-WorkoutTracker", {
 
 		var pauseButton = document.createElement("button");
 		pauseButton.className = "big-button";
-		pauseButton.innerHTML = "Pause Workout Session ⏸️";
+		pauseButton.innerHTML = "Pause Workout Session";
 		pauseButton.onclick = () => {
 			this.pauseWorkoutTracking();
-			pauseButton.innerHTML = this.paused ? "Resume Workout Session ▶️" : "Pause Workout Session ⏸️";
+			pauseButton.innerHTML = this.paused ? "Resume Workout Session" : "Pause Workout Session";
 		};
 
 		buttonsContainer.appendChild(pauseButton);
@@ -92,7 +92,7 @@ Module.register("MMM-WorkoutTracker", {
 
 		var quitButton = document.createElement("button");
 		quitButton.className = "big-button";
-		quitButton.innerHTML = "Exit Workout Session 🛑";
+		quitButton.innerHTML = "Exit Workout Session";
 		quitButton.onclick = () => {
 
 			this.stopWorkoutTracking();
