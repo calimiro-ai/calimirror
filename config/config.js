@@ -68,6 +68,12 @@ let config = {
 		},
 
 		{
+			module: "MMM-WorkoutSessionPlot",
+			position: "middle_center",
+			hiddenOnStartup: true
+		},
+
+		{
 			module: "updatenotification",
 			position: "top_bar"
 		},
