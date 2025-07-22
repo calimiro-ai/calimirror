@@ -50,7 +50,7 @@ let config = {
 			module: "clock",
 			hiddenOnStartup: true,
 			position: "top_right",
-			classes: "tracking_modules loading_modules",
+			classes: "tracking_modules",
 			showDate: false
 		},
 
