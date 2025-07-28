@@ -19,7 +19,6 @@ Module.register("MMM-WorkoutTracker", {
 	availableExercises: null,
 	exerciseDurations: [],
 	performedExercises: [],
-	areExercisesAvailable: false,
 
 
 	getStyles () {
@@ -100,46 +99,6 @@ Module.register("MMM-WorkoutTracker", {
 		this.mainContainer.appendChild(buttonsContainer);
 	},
 
-	createExerciseSelector() {
-		var exerciseSelectorContainer = document.createElement("div");
-		this.addWhiteBorderClassToContainer(exerciseSelectorContainer);
-
-		var selectorTipText = document.createElement("p");
-		selectorTipText.innerHTML = "Select manually an exercise";
-		exerciseSelectorContainer.appendChild(selectorTipText);
-
-		var selector = document.createElement("select");
-		selector.id = "exercise-selector";
-
-		if(this.availableExercises === null) {
-			console.error("Error: this.availableExercises = null");
-			return;
-		}
-
-		this.availableExercises.forEach(option => {
-			var optionElement = document.createElement("option");
-			optionElement.value = option;
-			optionElement.innerHTML = option;
-			selector.appendChild(optionElement);
-		});
-
-		selector.addEventListener("change", (event) => {
-			this.sendSocketNotification("EXERCISE_MANUALLY_SELECTED", {current_selected_exercise: event.target.value});
-		});
-
-		// sets the selector to the current exercise
-		// stats[0] is current exercise
-		if(this.stats !== null) {
-			if(this.stats.length !== 0) {
-				selector.value = this.stats[0];
-			}
-		}
-		
-		
-		exerciseSelectorContainer.appendChild(selector);
-
-		this.mainContainer.appendChild(exerciseSelectorContainer);
-	},
 
 	getDom () {
 
@@ -149,9 +108,6 @@ Module.register("MMM-WorkoutTracker", {
 		this.createHeadlineBanner();
 		this.createStatsDisplays();
 
-		if(this.areExercisesAvailable) {
-			this.createExerciseSelector();
-		}
 
 		this.createButtons();
 

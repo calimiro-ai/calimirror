@@ -66,24 +66,6 @@ module.exports = NodeHelper.create({
             });
 
         }
-
-        else if(notification === "EXERCISE_MANUALLY_SELECTED") {
-            const url = "http://localhost:8000" + this.workoutSessionSetExerciseRoute;
-
-            fetch(url, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(payload)
-            })
-            .then(res => {
-                console.log(`Status code of POST request to ${url}   :   %d`, res.status);
-                return res;
-            })
-            .catch(err => {
-                console.error(`GET request to ${url} failed:\n`, err);
-                this.sendSocketNotification("EXERCISE_MANUALLY_SELECTED_FAILED", {});
-            });
-        }
     }
 
 });
