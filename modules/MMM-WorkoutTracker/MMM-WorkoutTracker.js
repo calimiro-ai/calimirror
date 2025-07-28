@@ -1,9 +1,4 @@
-/* 
 
-MMM-WorkoutTracker module for CalisthenicsSmartMirror
-CalisthenicsSmartMirror v0.1.0 (frontend)
-
-*/
 
 
 
