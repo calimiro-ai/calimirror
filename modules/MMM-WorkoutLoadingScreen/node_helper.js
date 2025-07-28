@@ -27,6 +27,10 @@ module.exports = NodeHelper.create({
         if (notification === "WORKOUT_LOADING_START") {
             this.isLoading = true;
         }
+
+        else if (notification === "SHOW_ERROR_LOADING_SESSION_TIMEOUT") {
+            this.isLoading = false;
+        }
     }
 
 });

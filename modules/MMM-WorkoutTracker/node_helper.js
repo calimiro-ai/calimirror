@@ -1,6 +1,7 @@
 const NodeHelper = require("node_helper");
 const bodyParser = require("body-parser");
 const { response } = require("express");
+const { not } = require("ajv/dist/compile/codegen");
 // const fetch = require("node-fetch") No need for it if you use Node 18+
 
 module.exports = NodeHelper.create({
@@ -11,6 +12,7 @@ module.exports = NodeHelper.create({
     workoutTrackingDataRoute: "/workout-tracking",
     workoutSessionStateRoute: "/workout-session-state",
     workoutSessionStartRoute: "/workout-session-start",
+    workoutSessionSetExerciseRoute: "/set-manual-exercise", 
 
     start () {
 
@@ -63,6 +65,24 @@ module.exports = NodeHelper.create({
                 this.sendSocketNotification("SHOW_ERROR_LOADING_SESSION_FAILED", {});
             });
 
+        }
+
+        else if(notification === "EXERCISE_MANUALLY_SELECTED") {
+            const url = "http://localhost:8000" + this.workoutSessionSetExerciseRoute;
+
+            fetch(url, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                console.log(`Status code of POST request to ${url}   :   %d`, res.status);
+                return res;
+            })
+            .catch(err => {
+                console.error(`GET request to ${url} failed:\n`, err);
+                this.sendSocketNotification("EXERCISE_MANUALLY_SELECTED_FAILED", {});
+            });
         }
     }
 

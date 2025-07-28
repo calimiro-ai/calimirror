@@ -3,8 +3,11 @@ Module.register("MMM-WorkoutLoadingScreen", {
         defaultLoadingText: "Loading",
         effectChar: ".",
         maxDots: 3,
-        updateInterval: 1000
+        updateInterval: 1000,
+        maxLoadingTime: 45
     },
+
+    loadingStartTime: 0,
 
     start() {
         this.loadingText = this.defaults.defaultLoadingText;
@@ -54,6 +57,7 @@ Module.register("MMM-WorkoutLoadingScreen", {
         if(sender) {
             if(sender.name === "MMM-WorkoutStarter" && notification === "WORKOUT_LOADING_START") {
                 this.sendSocketNotification("WORKOUT_LOADING_START", {});
+                this.loadingStartTime = new Date().getTime();
                 this.scheduleNextUpdate();
             }
         }
@@ -62,6 +66,7 @@ Module.register("MMM-WorkoutLoadingScreen", {
     socketNotificationReceived(notification, payload) {
         if(notification === "WORKOUT_LOADING_EXERCISES_FINISHED") {
             this.sendNotification("WORKOUT_LOADING_EXERCISES_FINISHED", {});
+            this.loadingStartTime = 0;
         }
     }
 

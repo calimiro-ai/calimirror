@@ -129,8 +129,7 @@ Module.register("MMM-WorkoutTracker", {
 		});
 
 		selector.addEventListener("change", (event) => {
-			var selectedValue = event.target.value;
-			console.log("Selected option: ", selectedValue);
+			this.sendSocketNotification("EXERCISE_MANUALLY_SELECTED", {current_selected_exercise: event.target.value});
 		});
 
 		// sets the selector to the current exercise
@@ -217,6 +216,22 @@ Module.register("MMM-WorkoutTracker", {
 				this.sendNotification("WORKOUT_TRACKING_END", {});
 			}, 1000);
 			
+		}
+
+		else if(notification === "SHOW_ERROR_LOADING_SESSION_TIMEOUT") {
+			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "It seems that your workout session took too long time to be loaded. Please retry.", effect: "exploader", timer: 3000});
+			
+			MM.getModules().withClass("loading_modules").enumerate(module => module.hide(1000));
+			this.hide(1000);
+
+			setTimeout(() => {
+				this.sendNotification("WORKOUT_TRACKING_END", {});
+			}, 1000);
+			
+		}
+
+		else if(notification === "EXERCISE_MANUALLY_SELECTED_FAILED") {
+			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Calimiro couldn't communicate with the server. Please retry.", effect: "exploader", timer: 3000})
 		}
 
 	},
