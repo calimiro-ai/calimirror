@@ -42,8 +42,11 @@ Module.register("MMM-WorkoutStarter", {
     notificationReceived: function(notification, payload, sender) {
         if(sender) {
             if(sender.name === "MMM-WorkoutTracker" && notification === "WORKOUT_TRACKING_END") {
-                this.show(1000);
-                MM.getModules().exceptWithClass("tracking_modules loading_modules by_default_hidden").enumerate(module => module.show(1000));
+                MM.getModules().withClass("tracking_modules loading_modules by_default_hidden").enumerate(module => module.hide(1000));
+                
+                setTimeout(() => {
+                    MM.getModules().exceptWithClass("tracking_modules loading_modules by_default_hidden").enumerate(module => module.show(1000));
+                }, 1000);
             }
 
             if(sender.name === "MMM-WorkoutLoadingScreen" && notification === "WORKOUT_LOADING_EXERCISES_FINISHED") {
@@ -52,9 +55,10 @@ Module.register("MMM-WorkoutStarter", {
                 setTimeout(() => {
                     this.sendNotification("WORKOUT_TRACKING_START", {});
                     MM.getModules().withClass("tracking_modules").enumerate(module => module.show(1000));
-                    this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Perform your exercises in front of the camera!", timer: 3000, effect: "exploader"});
+                    this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Perform your exercises in front of the camera!", timer: 10000, effect: "exploader"});
                 }, 1000);
             }
+
         }
     }
         

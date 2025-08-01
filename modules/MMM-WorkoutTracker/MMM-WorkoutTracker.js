@@ -159,9 +159,6 @@ Module.register("MMM-WorkoutTracker", {
 		}
 		else if(notification === "SHOW_ERROR_LOADING_SESSION_FAILED") {
 			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Calimiro couldn't start the workout session. Please retry.", effect: "exploader", timer: 3000});
-			
-			MM.getModules().withClass("loading_modules").enumerate(module => module.hide(1000));
-			this.hide(1000);
 
 			setTimeout(() => {
 				this.sendNotification("WORKOUT_TRACKING_END", {});
@@ -171,18 +168,11 @@ Module.register("MMM-WorkoutTracker", {
 
 		else if(notification === "SHOW_ERROR_LOADING_SESSION_TIMEOUT") {
 			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "It seems that your workout session took too long time to be loaded. Please retry.", effect: "exploader", timer: 3000});
-			
-			MM.getModules().withClass("loading_modules").enumerate(module => module.hide(1000));
-			this.hide(1000);
 
 			setTimeout(() => {
 				this.sendNotification("WORKOUT_TRACKING_END", {});
 			}, 1000);
 			
-		}
-
-		else if(notification === "EXERCISE_MANUALLY_SELECTED_FAILED") {
-			this.sendNotification("SHOW_ALERT", {type: "notification", title: "Calimiro", message: "Calimiro couldn't communicate with the server. Please retry.", effect: "exploader", timer: 3000})
 		}
 
 	},
@@ -195,7 +185,6 @@ Module.register("MMM-WorkoutTracker", {
 		this.stopped = true;
 		this.sendToBackend();
 
-		MM.getModules().withClass("tracking_modules").enumerate(module => module.hide(1000));
 		setTimeout(() => {
 			this.sendNotification("WORKOUT_TRACKING_END", {});
 		}, 1000);
